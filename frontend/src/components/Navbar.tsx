@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
 import { UserButton } from "@clerk/clerk-react";
-import logo from "../assets/prosperly_logo.webp";
 const NavItem = ({
   href,
   children,
@@ -27,20 +26,16 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* left */}
           <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-8 w-8 p-2" />
+            {/* <img src={logo} alt="Logo" className="h-8 w-8 p-2" /> */}
             <div className="flex-shrink-0">
-              <span className="text-lg font-bold">Prosperly</span>
+              <span className="text-lg font-bold">Picz</span>
             </div>
           </div>
           {/* right */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <NavItem href="/dashboard">Dashboard</NavItem>
-              <NavItem href="/properties">Properties</NavItem>
-              <NavItem href="/reports">Reports</NavItem>
-              <NavItem href="/documents">Documents</NavItem>
-              <NavItem href="/contact">Contact</NavItem>
-              <NavItem href="/settings">Settings</NavItem>
+              <NavItem href="/myimages">Images</NavItem>
+              <NavItem href="/upload">Upload</NavItem>
               <ModeToggle />
               <UserButton />
             </div>
@@ -67,12 +62,8 @@ export const Navbar = () => {
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <NavItem href="/dashboard">Dashboard</NavItem>
-            <NavItem href="/properties">Properties</NavItem>
-            <NavItem href="/reports">Reports</NavItem>
-            <NavItem href="/documents">Documents</NavItem>
-            <NavItem href="/contact">Contact</NavItem>
-            <NavItem href="/settings">Settings</NavItem>
+            <NavItem href="/upload">Upload</NavItem>
+            <NavItem href="/images">Images</NavItem>
           </div>
         </div>
       )}
