@@ -17,6 +17,7 @@ import {
   handleRemoveImage,
 } from "../handlers/imageUpload";
 import { UploadArea, ImagePreviewList } from "../components/ImageUpload";
+import { useImageUploadHandler } from "@/hooks/hooks";
 
 type UploadedImage = {
   file: File;
@@ -28,12 +29,12 @@ const ImageUploadPage = () => {
   const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  // const upload = useImageUploadHandler();
   const [currentImageIndex, setCurrentImageIndex] = useState<number | null>(
     null
   );
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Bind the `setIsDragging` function to the handlers
   const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();

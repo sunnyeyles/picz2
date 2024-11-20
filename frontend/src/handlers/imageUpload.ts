@@ -1,5 +1,5 @@
 import { DragEvent, ChangeEvent } from "react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, FormEvent } from "react";
 
 type UploadedImage = {
   file: File;
@@ -82,7 +82,7 @@ export const handleRemoveImage = (
 };
 
 export const handleSubmit = (
-  e: React.FormEvent,
+  e: FormEvent,
   uploadedImages: UploadedImage[],
   setUploadedImages: Dispatch<SetStateAction<UploadedImage[]>>,
   setShowModal: Dispatch<SetStateAction<boolean>>,
