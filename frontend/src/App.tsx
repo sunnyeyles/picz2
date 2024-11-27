@@ -1,5 +1,5 @@
 import { Button } from "./components/ui/button";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 import { RouterProvider } from "react-router-dom";
@@ -13,7 +13,12 @@ const App = () => {
         </SignInButton>
       </SignedOut>
       <SignedIn>
-        <RouterProvider router={router} />
+        <RouterProvider
+          future={{
+            v7_startTransition: true,
+          }}
+          router={router}
+        />
       </SignedIn>
     </ThemeProvider>
   );

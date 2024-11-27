@@ -1,15 +1,17 @@
 import { Router } from 'express'
 import multer from 'multer'
-import {
-  uploadImageHandler,
-  getAllImagesHandler,
-} from '../handlers/imageHandlers'
+import { uploadImageHandler } from '../handlers/uploadImageHandler'
+import { getAllImagesHandler } from '../handlers/getAllImagesHandler'
 
 const upload = multer()
 
 const imageRouter = Router()
 
-imageRouter.post('/image/newimage/', upload.single('file'), uploadImageHandler)
+imageRouter.post(
+  '/image/uploadimage/',
+  upload.single('file'),
+  uploadImageHandler
+)
 
 imageRouter.get('/image/getallimages/', getAllImagesHandler)
 

@@ -1,18 +1,25 @@
-import axios from "axios";
+import { axiosInstance } from "@/config/axiosInstance";
 
-export const uploadImage = async (file: File) => {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  try {
-    const response = await axios.post("/api/upload", formData, {
+export const uploadImage = async (formData: FormData) => {
+  const response = await axiosInstance.post(
+    "/api/image/uploadimage/",
+    formData,
+    {
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    });
-    return response.data; // You can modify this based on your API's response structure
+    }
+  );
+  return response.data;
+};
+
+export const getAllImages = async () => {
+  try {
+    const response = await axiosInstance.get("/api/image/getAllImages/");
+    console.log("images from api: ", response.data.images);
+    return response.data.images;
   } catch (error) {
-    console.error("Image upload failed:", error);
-    throw error; // Propagate the error to be handled in the hook
+    console.log("Failed to fetch images:", error);
+    throw error;
   }
 };

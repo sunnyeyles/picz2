@@ -4,20 +4,13 @@ import {
   GetObjectCommand,
 } from '@aws-sdk/client-s3'
 import * as dotenv from 'dotenv'
-dotenv.config()
-import { UUID } from 'crypto'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
+dotenv.config()
 const accessKey = process.env.AWS_ACCESS_KEY_ID
 const secretKey = process.env.AWS_SECRET_ACCESS_KEY
 const bucketName = process.env.AWS_S3_BUCKET_NAME
 const awsRegion = process.env.AWS_REGION
-console.log({
-  accessKey,
-  secretKey,
-  bucketName,
-  awsRegion,
-})
 
 interface IImageData {
   key: string
@@ -47,8 +40,6 @@ export const uploadNewImage = async (
   const { imageData } = payload
   const { key, body } = imageData
   try {
-    // const userDirectoryPath = `${usersUsername}/`
-    // const fullKey = `${userDirectoryPath}${key}`
     await s3Client.send(
       new PutObjectCommand({
         Bucket: bucketName,
@@ -63,8 +54,7 @@ export const uploadNewImage = async (
   }
 }
 
-export const getAllImages = async (): // username: string
-Promise<IImage[] | []> => {
+export const getAllImages = async (): Promise<IImage[] | []> => {
   try {
     // const userDirectoryPath = `${username}/`
     const data = await s3Client.send(
@@ -73,7 +63,6 @@ Promise<IImage[] | []> => {
         // Prefix: userDirectoryPath,
       })
     )
-    console.log('data: ', data)
 
     if (data.Contents && data.Contents.length > 0) {
       const imageUrls = await Promise.all(

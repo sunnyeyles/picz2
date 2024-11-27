@@ -26,7 +26,6 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* left */}
           <div className="flex items-center">
-            {/* <img src={logo} alt="Logo" className="h-8 w-8 p-2" /> */}
             <div className="flex-shrink-0">
               <span className="text-lg font-bold">Picz</span>
             </div>
@@ -34,7 +33,7 @@ export const Navbar = () => {
           {/* right */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <NavItem href="/myimages">Images</NavItem>
+              <NavItem href="/images">Images</NavItem>
               <NavItem href="/upload">Upload</NavItem>
               <ModeToggle />
               <UserButton />
