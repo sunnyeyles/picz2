@@ -15,13 +15,13 @@ interface IRequestWithImageData extends Request {
 }
 
 type Image = {
-  key: string // Unique identifier for the image
-  url: string // URL pointing to the image in the S3 bucket
+  key: string
+  url: string
 }
 
 type ApiResponse = {
-  message: string // A message indicating the response content
-  images: Image[] // An array of images
+  message: string
+  images: Image[]
 }
 
 export const getAllImagesHandler = async (
