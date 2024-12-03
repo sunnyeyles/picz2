@@ -1,6 +1,5 @@
 import { Schema, model } from 'mongoose'
 import { User as UserType } from '../types/types'
-import { Image as ImageType } from '../types/types'
 
 const userSchema = new Schema<UserType>(
   {
@@ -38,7 +37,7 @@ const userSchema = new Schema<UserType>(
         validator: (urls: string[]): boolean => {
           return urls.every((url) => /^https?:\/\/[^\s$.?#].[^\s]*$/.test(url))
         },
-        message: 'Each URL must be a valid URL.',
+        message: 'each URL must be a valid URL.',
       },
     },
   },

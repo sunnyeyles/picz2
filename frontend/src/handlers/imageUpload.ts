@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, FormEvent } from "react";
 
 type UploadedImage = {
   file: File;
-  preview: string;
+  // preview: string;
   description: string;
 };
 
@@ -57,7 +57,7 @@ const handleFiles = (
 ) => {
   const newImages = files.map((file) => ({
     file,
-    preview: URL.createObjectURL(file),
+    // preview: URL.createObjectURL(file),
     description: "",
   }));
   setUploadedImages((prev) => [...prev, ...newImages]);

@@ -5,6 +5,7 @@ import NotFound from "@/pages/NotFound";
 import { Suspense } from "react";
 import ImageGalleryPage from "@/pages/ImageGallery";
 import ImageUploadPage from "@/pages/ImageUpload";
+import { BackgroundBoxesDemo } from "@/components/BackgroundBoxesDemo";
 
 const routes: RouteObject[] = [
   {
@@ -31,6 +32,16 @@ const routes: RouteObject[] = [
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <ImageUploadPage />
+          </Suspense>
+        ),
+        errorElement: <NotFound />,
+      },
+      {
+        path: "/boxes",
+
+        element: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <BackgroundBoxesDemo />
           </Suspense>
         ),
         errorElement: <NotFound />,

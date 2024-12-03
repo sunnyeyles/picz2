@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./server/.env
+    networks:
+      - picz
+    ports:
+      - "3000:3000" # for backend
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    command: sh -c "npx prisma migrate deploy && npm run dev"
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: ./client/.env
+    networks:
+      - picz
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    command: sh -c "npm rebuild && npm run dev -- --host"
+
+networks:
+  picz:
+    driver: bridge
+
+volumes:
+  postgres_data:

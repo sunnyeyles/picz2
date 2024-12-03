@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef, ChangeEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -7,7 +7,8 @@ import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import useImageStore from "@/stores/imageStore";
 import { useUser } from "@clerk/clerk-react";
-import { ImageFormData } from "@/types/sharedTypes"; // Ensure correct import
+import { ImageFormData } from "@/types/sharedTypes";
+import { Toaster } from "@/components/ui/toaster";
 
 export const ImageUpload = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -28,7 +29,7 @@ export const ImageUpload = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setImage(file);
@@ -55,7 +56,12 @@ export const ImageUpload = () => {
         file: image,
       };
 
+      // Make the image upload request here
       uploadImage(imageFormData);
+
+      // Clear image after upload
+      setImage(null);
+      setPreviewUrl(null); // Clear the preview URL as well
 
       toast({
         title: "Success",
@@ -68,7 +74,7 @@ export const ImageUpload = () => {
         variant: "destructive",
       });
     } finally {
-      setIsUploading(false);
+      setIsUploading(false); // Set uploading state to false
     }
   };
 
@@ -111,6 +117,7 @@ export const ImageUpload = () => {
           >
             {isUploading ? "Uploading..." : "Submit"}
           </Button>
+          <Toaster />
         </div>
       </CardContent>
     </Card>

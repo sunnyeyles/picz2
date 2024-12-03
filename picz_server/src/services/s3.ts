@@ -6,25 +6,14 @@ import {
 import * as dotenv from 'dotenv'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
+import { NewImageData as NewImageDataType } from '../types/types'
+import { UploadedImagePayload as UploadedImagePayloadType } from '../types/types'
+import { Image as ImageType } from '../types/types'
 dotenv.config()
 const accessKey = process.env.AWS_ACCESS_KEY_ID
 const secretKey = process.env.AWS_SECRET_ACCESS_KEY
 const bucketName = process.env.AWS_S3_BUCKET_NAME
 const awsRegion = process.env.AWS_REGION
-
-interface IImageData {
-  key: string
-  body: Buffer
-}
-
-interface IUploadNewImagePayload {
-  imageData: IImageData
-  // usersUsername: string
-}
-interface IImage {
-  key: string
-  url?: string
-}
 
 export const s3Client = new S3Client({
   region: awsRegion,
@@ -35,7 +24,7 @@ export const s3Client = new S3Client({
 })
 
 export const uploadNewImage = async (
-  payload: IUploadNewImagePayload
+  payload: UploadedImagePayloadType
 ): Promise<void> => {
   const { imageData } = payload
   const { key, body } = imageData
@@ -54,13 +43,11 @@ export const uploadNewImage = async (
   }
 }
 
-export const getAllImages = async (): Promise<IImage[] | []> => {
+export const getAllImages = async (): Promise<any[] | []> => {
   try {
-    // const userDirectoryPath = `${username}/`
     const data = await s3Client.send(
       new ListObjectsV2Command({
         Bucket: bucketName,
-        // Prefix: userDirectoryPath,
       })
     )
 
