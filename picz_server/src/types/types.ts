@@ -16,6 +16,7 @@ export type Image = {
 export type NewImageData = {
   key: string
   body: Buffer
+  userId: string
 }
 export type UploadedImagePayload = {
   imageData: NewImageData

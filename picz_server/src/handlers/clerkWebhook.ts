@@ -8,12 +8,13 @@ export const createNewUser = async (
 ) => {
   try {
     console.log('Webhook received:', req.body)
+    // have to tell it to only trigger when type = user.created
 
     const { id, first_name, last_name, email_addresses } = req.body.data
 
     const email = email_addresses[0]?.email_address || ''
 
-    const imageUrls = [{}]
+    const imageUrls: string[] = []
 
     const newUser = {
       _idClerk: id,

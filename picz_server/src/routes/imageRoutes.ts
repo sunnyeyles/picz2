@@ -13,6 +13,6 @@ imageRouter.post(
   uploadImageHandler
 )
 
-imageRouter.get('/image/getallimages/', getAllImagesHandler)
+imageRouter.post('/image/getallimages/', getAllImagesHandler)
 
 export default imageRouter

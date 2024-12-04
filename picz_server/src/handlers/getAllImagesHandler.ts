@@ -6,9 +6,9 @@ export const getAllImagesHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const images = await getAllImages()
+    const { userId } = req.body
+    const images = await getAllImages(userId)
     if (images.length > 0) {
-      console.log(images)
       res.status(200).json({ images: images })
       return
     } else {

@@ -12,7 +12,7 @@ type ImageState = {
   images: Image[];
   loading: boolean;
   error: string | null;
-  fetchImages: () => void;
+  fetchImages: (userId: string) => void;
   setImages: (images: Image[]) => void;
   setLoading: (loading: boolean) => void;
   uploadImage: (image: ImageFormData) => void;
@@ -24,10 +24,13 @@ const useImageStore = create<ImageState>((set) => ({
   error: null,
   setImages: (images) => set({ images }),
   setLoading: (loading) => set({ loading }),
-  fetchImages: async () => {
+  fetchImages: async (userId: string) => {
     set({ loading: true, error: null });
     try {
-      const response = await axiosInstance.get("/api/image/getallimages/");
+      const response = await axiosInstance.post("/api/image/getallimages/", {
+        userId,
+      });
+      console.log(response);
       const apiImages = response.data.images.map((img: any) => ({
         id: img.key,
         url: img.url,

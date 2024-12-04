@@ -1,4 +1,5 @@
 import { axiosInstance } from "@/config/axiosInstance";
+import { useUser } from "@clerk/clerk-react";
 
 interface UploadImageResponse {
   message: string;
@@ -31,7 +32,6 @@ export const uploadImage = async (
 export const getAllImages = async () => {
   try {
     const response = await axiosInstance.get("/api/image/getAllImages/");
-    console.log("images from api: ", response.data.images);
     return response.data.images;
   } catch (error) {
     console.log("Failed to fetch images:", error);

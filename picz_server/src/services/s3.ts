@@ -6,7 +6,6 @@ import {
 import * as dotenv from 'dotenv'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
-import { NewImageData as NewImageDataType } from '../types/types'
 import { UploadedImagePayload as UploadedImagePayloadType } from '../types/types'
 dotenv.config()
 const accessKey = process.env.AWS_ACCESS_KEY_ID
@@ -23,7 +22,6 @@ export const s3Client = new S3Client({
 })
 
 export const uploadNewImage = async (
-  // payload: UploadedImagePayloadType
   payload: UploadedImagePayloadType
 ): Promise<any> => {
   const { imageData } = payload
@@ -37,10 +35,6 @@ export const uploadNewImage = async (
         ContentType: 'image/jpeg',
       })
     )
-    console.log('Response from AWS: ', response)
-    // const objectUrl = `https://${bucketName}.s3.${s3.config.region}.amazonaws.com/${key}`
-
-    // console.log('File uploaded successfully at:', objectUrl)
 
     return response
   } catch (err) {
@@ -48,11 +42,13 @@ export const uploadNewImage = async (
   }
 }
 
-export const getAllImages = async (): Promise<any[] | []> => {
+export const getAllImages = async (userId: string): Promise<any[] | []> => {
   try {
+    const prefix = userId
     const data = await s3Client.send(
       new ListObjectsV2Command({
         Bucket: bucketName,
+        Prefix: prefix,
       })
     )
 
