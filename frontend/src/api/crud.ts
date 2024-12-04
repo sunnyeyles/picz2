@@ -1,16 +1,31 @@
 import { axiosInstance } from "@/config/axiosInstance";
 
-export const uploadImage = async (formData: FormData) => {
-  const response = await axiosInstance.post(
-    "/api/image/uploadimage/",
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    }
-  );
-  return response.data;
+interface UploadImageResponse {
+  message: string;
+  data?: {
+    imageId: string;
+    imageUrl: string;
+  };
+}
+export const uploadImage = async (
+  formData: FormData
+): Promise<UploadImageResponse> => {
+  try {
+    const response = await axiosInstance.post<UploadImageResponse>(
+      "/api/image/uploadimage/",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    throw error;
+  }
 };
 
 export const getAllImages = async () => {

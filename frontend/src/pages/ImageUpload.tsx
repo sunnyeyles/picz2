@@ -1,10 +1,8 @@
-import { ImageUpload } from "@/components/ImageuploadForm";
+import { ImageUpload } from "@/components/ImageUploadForm";
 const ImageUploadPage = () => {
   return (
     <div>
-      <div>
-        <ImageUpload />
-      </div>
+      <ImageUpload />
     </div>
   );
 };

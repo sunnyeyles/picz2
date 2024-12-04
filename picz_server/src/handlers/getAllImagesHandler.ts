@@ -12,7 +12,9 @@ export const getAllImagesHandler = async (
       res.status(200).json({ images: images })
       return
     } else {
-      res.status(404).json({ message: 'no images were found' })
+      res
+        .status(200)
+        .json({ message: 'user has no images uploaded', images: [] })
       return
     }
   } catch (error) {

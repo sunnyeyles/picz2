@@ -1,16 +1,14 @@
-import { Button } from "./components/ui/button";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/Routes";
+import { LandingPage } from "./pages/Landing";
 const App = () => {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <SignedOut>
-        <SignInButton>
-          <Button>Sign in</Button>
-        </SignInButton>
+        <LandingPage />
       </SignedOut>
       <SignedIn>
         <RouterProvider

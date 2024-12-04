@@ -5,10 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Upload } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import useImageStore from "@/stores/imageStore";
 import { useUser } from "@clerk/clerk-react";
-import { ImageFormData } from "@/types/sharedTypes";
 import { Toaster } from "@/components/ui/toaster";
+import { uploadImage } from "@/api/crud";
 
 export const ImageUpload = () => {
   const [image, setImage] = useState<File | null>(null);
@@ -16,7 +15,6 @@ export const ImageUpload = () => {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
-  const { uploadImage } = useImageStore();
   const user = useUser();
 
   if (!user || !user.user) {
@@ -37,7 +35,6 @@ export const ImageUpload = () => {
       setPreviewUrl(url);
     }
   };
-
   const handleSubmit = async () => {
     if (!image) {
       toast({
@@ -51,30 +48,29 @@ export const ImageUpload = () => {
     setIsUploading(true);
 
     try {
-      const imageFormData: ImageFormData = {
-        userId: userId,
-        file: image,
-      };
+      const formData = new FormData();
+      formData.append("userId", userId);
+      formData.append("file", image);
+      console.log(formData);
 
-      // Make the image upload request here
-      uploadImage(imageFormData);
+      await uploadImage(formData);
 
-      // Clear image after upload
       setImage(null);
-      setPreviewUrl(null); // Clear the preview URL as well
+      setPreviewUrl(null);
 
       toast({
         title: "Success",
         description: "Image uploaded successfully!",
       });
     } catch (error) {
+      console.error("Error uploading image:", error);
       toast({
         title: "Error",
         description: "Failed to upload image. Please try again.",
         variant: "destructive",
       });
     } finally {
-      setIsUploading(false); // Set uploading state to false
+      setIsUploading(false);
     }
   };
 

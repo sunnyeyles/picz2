@@ -8,7 +8,6 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import { PutObjectCommand } from '@aws-sdk/client-s3'
 import { NewImageData as NewImageDataType } from '../types/types'
 import { UploadedImagePayload as UploadedImagePayloadType } from '../types/types'
-import { Image as ImageType } from '../types/types'
 dotenv.config()
 const accessKey = process.env.AWS_ACCESS_KEY_ID
 const secretKey = process.env.AWS_SECRET_ACCESS_KEY
@@ -24,12 +23,13 @@ export const s3Client = new S3Client({
 })
 
 export const uploadNewImage = async (
+  // payload: UploadedImagePayloadType
   payload: UploadedImagePayloadType
-): Promise<void> => {
+): Promise<any> => {
   const { imageData } = payload
   const { key, body } = imageData
   try {
-    await s3Client.send(
+    const response = await s3Client.send(
       new PutObjectCommand({
         Bucket: bucketName,
         Key: key,
@@ -37,7 +37,12 @@ export const uploadNewImage = async (
         ContentType: 'image/jpeg',
       })
     )
-    return
+    console.log('Response from AWS: ', response)
+    // const objectUrl = `https://${bucketName}.s3.${s3.config.region}.amazonaws.com/${key}`
+
+    // console.log('File uploaded successfully at:', objectUrl)
+
+    return response
   } catch (err) {
     console.log(err)
   }

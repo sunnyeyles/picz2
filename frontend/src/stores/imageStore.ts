@@ -34,7 +34,6 @@ const useImageStore = create<ImageState>((set) => ({
         title: `Image ${img.key.slice(0, 5)}`,
       }));
       set({ images: apiImages, loading: false });
-      console.log("Images in state", apiImages);
     } catch (error) {
       console.error("Failed to fetch images:", error);
       set({ error: "Failed to load images.", loading: false });
@@ -48,14 +47,7 @@ const useImageStore = create<ImageState>((set) => ({
       const formData = new FormData();
       formData.append("userId", userId);
       formData.append("file", file);
-
-      console.log("FormData contents:");
-      for (const [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
-
-      const response = await uploadImageHandler(formData);
-      console.log("Uploaded image response:", response);
+      console.log("Form data from imageStore.ts: ", formData);
     } catch (error) {
       console.error("Failed to upload image:", error);
       set({ error: "Failed to upload image.", loading: false });
