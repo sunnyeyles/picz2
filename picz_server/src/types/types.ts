@@ -5,18 +5,22 @@ export type User = {
   email: string
   fName: string
   lName: string
-  imageUrls: string[]
+  images: Image[]
 }
 
 export type Image = {
-  userId: User['_idMongo']
+  userId: User['_idClerk']
   key: string
+  title: string
+  description?: string
   url: string
 }
 export type NewImageData = {
   key: string
   body: Buffer
   userId: string
+  title?: string
+  description?: string
 }
 export type UploadedImagePayload = {
   imageData: NewImageData

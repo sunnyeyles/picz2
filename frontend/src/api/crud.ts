@@ -1,5 +1,4 @@
 import { axiosInstance } from "@/config/axiosInstance";
-import { useUser } from "@clerk/clerk-react";
 
 interface UploadImageResponse {
   message: string;
@@ -12,6 +11,7 @@ export const uploadImage = async (
   formData: FormData
 ): Promise<UploadImageResponse> => {
   try {
+    console.log("form data: ", formData);
     const response = await axiosInstance.post<UploadImageResponse>(
       "/api/image/uploadimage/",
       formData,

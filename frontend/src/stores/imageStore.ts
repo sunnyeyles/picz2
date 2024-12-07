@@ -1,11 +1,13 @@
 import { create } from "zustand";
 import { axiosInstance } from "@/config/axiosInstance";
-import { uploadImage as uploadImageHandler } from "../api/crud";
 import { ImageFormData } from "@/types/sharedTypes";
 type Image = {
-  id: string;
-  url: string;
+  userId: string;
+  key: string;
   title: string;
+  description?: string;
+  url: string;
+  _id: string;
 };
 
 type ImageState = {
@@ -30,19 +32,22 @@ const useImageStore = create<ImageState>((set) => ({
       const response = await axiosInstance.post("/api/image/getallimages/", {
         userId,
       });
-      console.log(response);
       const apiImages = response.data.images.map((img: any) => ({
-        id: img.key,
+        userId: img.userId,
+        key: img.key,
+        title: img.title,
+        description: img.description,
         url: img.url,
-        title: `Image ${img.key.slice(0, 5)}`,
+        _id: img._id,
       }));
+      console.log(apiImages);
+
       set({ images: apiImages, loading: false });
     } catch (error) {
       console.error("Failed to fetch images:", error);
       set({ error: "Failed to load images.", loading: false });
     }
   },
-
   uploadImage: async ({ file, userId }: ImageFormData) => {
     set({ loading: true, error: null });
 

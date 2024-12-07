@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { Menu, X } from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
 import { UserButton } from "@clerk/clerk-react";
-const NavItem = ({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) => (
-  <a
-    href={href}
-    className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out"
-  >
-    {children}
-  </a>
+import { Button } from "./ui/button";
+const NavItem = ({ href, children }: { href: string; children: ReactNode }) => (
+  <Button variant="ghost">
+    <a
+      href={href}
+      className="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out"
+    >
+      {children}
+    </a>
+  </Button>
 );
 
 export const Navbar = () => {
