@@ -14,6 +14,7 @@ export type Image = {
   title: string
   description?: string
   url: string
+  createdAt: Date
 }
 export type NewImageData = {
   key: string

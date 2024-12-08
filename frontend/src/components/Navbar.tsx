@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
 import { UserButton } from "@clerk/clerk-react";
 import { Button } from "./ui/button";
+import { Logo } from "./Logo";
 const NavItem = ({ href, children }: { href: string; children: ReactNode }) => (
   <Button variant="ghost">
     <a
@@ -23,8 +24,9 @@ export const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* left */}
           <div className="flex items-center">
+            <Logo width="30" height="30" />
             <div className="flex-shrink-0">
-              <span className="text-lg font-bold">Picz</span>
+              {/* <span className="text-lg font-bold">Picz</span> */}
             </div>
           </div>
           {/* right */}
