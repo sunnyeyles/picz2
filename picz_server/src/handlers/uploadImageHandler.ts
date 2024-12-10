@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { randomUUID } from 'crypto'
 import { uploadNewImage as uploadImageToS3 } from '../services/s3'
-import { User } from '../models/models'
+import { User, Image } from '../models/models'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
@@ -10,7 +10,7 @@ interface IRequestWithImageData extends Request {
   file?: Express.Multer.File
 }
 
-interface IImageData {
+type ImageData = {
   key: string
   body: Buffer
   userId: string
@@ -33,7 +33,7 @@ export const uploadImageHandler = async (
     const fileKey = `${userId}/${randomUUID()}`
     const bucketName = process.env.AWS_S3_BUCKET_NAME
 
-    const imageData: IImageData = {
+    const imageData: ImageData = {
       key: fileKey,
       body: fileBuffer,
       userId: userId,
@@ -41,6 +41,7 @@ export const uploadImageHandler = async (
       description: description,
     }
     const user = await User.findOne({ _idClerk: userId })
+    console.log('This is the user found', user)
 
     if (!user) {
       res.status(404).json({ message: 'User not found' })
@@ -58,6 +59,8 @@ export const uploadImageHandler = async (
       title,
       description,
       url: imageUrl,
+      // _id: randomUUID(),
+      dateUploaded: new Date(),
     }
 
     user.images.push(newImage)

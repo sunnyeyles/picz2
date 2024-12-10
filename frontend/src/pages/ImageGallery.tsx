@@ -2,59 +2,67 @@ import { useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import useImageStore from "@/stores/imageStore";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
-import { SearchAndSort } from "@/components/ImageSearch";
-import { PaginationComponent } from "@/components/Pagination";
+
 const ImageGalleryPage = () => {
-  const { images, loading, error, fetchImages } = useImageStore();
+  const {
+    imagesAscending,
+    imagesDescending,
+    fetchAll,
+    deleteImage,
+    loading,
+    error,
+  } = useImageStore();
+
+  const ascending = useImageStore((state) => state.ascending);
+
   const userId = useUser()?.user?.id;
-  console.log("Images from in state: ", images);
 
   useEffect(() => {
     if (userId) {
-      fetchImages(userId);
+      const order = ascending ? "ascending" : "descending";
+      fetchAll(userId, 50, order).catch((err) =>
+        console.error("Error fetching images:", err)
+      );
     }
-  }, [fetchImages, userId]);
+  }, [userId, ascending, fetchAll]);
 
   const handleDelete = (id: string) => {
     console.log("Delete image:", id);
-    // Add logic to delete file from the bucket
+    deleteImage(id, userId!);
   };
 
   const handleDownload = (
     url: string,
     filename: string = "downloaded_image"
   ) => {
-    console.log("image url:", url);
+    console.log("Image URL:", url);
   };
 
-  const hoverItems = images.map((image) => ({
-    id: image._id,
-    title: image.title,
-    imageUrl: image.url,
-    description: image.description,
-    onDelete: () => handleDelete(image._id),
-    onDownload: () => handleDownload(image.url),
-  }));
+  const hoverItems = (ascending ? imagesAscending : imagesDescending).map(
+    (image) => ({
+      id: image._id,
+      title: image.title,
+      imageUrl: image.url,
+      description: image.description,
+      onDelete: () => handleDelete(image._id),
+      onDownload: () => handleDownload(image.url),
+    })
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <SearchAndSort
-        onSearch={() => console.log("search")}
-        onSort={() => console.log("sort")}
-      />
       {loading && <div className="text-center">Loading...</div>}
       {error && <div className="text-center text-red-500">{error}</div>}
+
       {!loading && !error && (
-        <div className="py-10">
-          {images.length === 0 ? (
+        <>
+          <h1 className="text-3xl font-bold mb-6">Your Saved Images</h1>
+          {hoverItems.length === 0 ? (
             <p className="text-center">You haven't saved any images yet.</p>
           ) : (
-            <div>
-              <HoverEffect items={hoverItems} />
-              <PaginationComponent />
-            </div>
+            <HoverEffect items={hoverItems} />
           )}
-        </div>
+        </>
       )}
     </div>
   );

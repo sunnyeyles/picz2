@@ -30,16 +30,15 @@ const imageSchema = new Schema<ImageType>({
       message: 'URL must be a valid URL.',
     },
   },
+  dateUploaded: {
+    type: Date,
+    required: true,
+    default: Date.now,
+  },
 })
 
 const userSchema = new Schema<UserType>(
   {
-    _idMongo: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      unique: true,
-      auto: true,
-    },
     _idClerk: {
       type: String,
       required: true,

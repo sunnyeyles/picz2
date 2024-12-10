@@ -1,6 +1,5 @@
 import { ObjectId } from 'mongoose'
 export type User = {
-  _idMongo: ObjectId
   _idClerk: string
   email: string
   fName: string
@@ -9,12 +8,13 @@ export type User = {
 }
 
 export type Image = {
+  _id: ObjectId
   userId: User['_idClerk']
   key: string
   title: string
   description?: string
   url: string
-  createdAt: Date
+  dateUploaded: Date
 }
 export type NewImageData = {
   key: string

@@ -20,7 +20,7 @@ export const HoverEffect = ({ items }: HoverEffectProps) => {
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {items.map((item, idx) => (
         <div
-          key={item.id}
+          key={item.id || idx}
           className="relative group"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
