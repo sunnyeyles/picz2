@@ -5,7 +5,7 @@ type LogoProps = {
   iczFontSize?: string;
 };
 
-export const Logo = ({ width, height, pFontSize, iczFontSize }: LogoProps) => (
+export const Logo = ({ width, height }: LogoProps) => (
   <div style={{ display: "flex", alignItems: "center" }}>
     <svg
       viewBox="0 0 24 24"

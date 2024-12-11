@@ -1,7 +1,16 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import useImageStore from "@/stores/imageStore";
 import { HoverEffect } from "@/components/ui/card-hover-effect";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const ImageGalleryPage = () => {
   const {
@@ -17,6 +26,9 @@ const ImageGalleryPage = () => {
 
   const userId = useUser()?.user?.id;
 
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [imageToDelete, setImageToDelete] = useState<string | null>(null);
+
   useEffect(() => {
     if (userId) {
       const order = ascending ? "ascending" : "descending";
@@ -27,13 +39,21 @@ const ImageGalleryPage = () => {
   }, [userId, ascending, fetchAll]);
 
   const handleDelete = (id: string) => {
-    console.log("Delete image:", id);
-    deleteImage(id, userId!);
+    setImageToDelete(id);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (imageToDelete && userId) {
+      deleteImage(imageToDelete, userId);
+      setIsDeleteDialogOpen(false);
+      setImageToDelete(null);
+    }
   };
 
   const handleDownload = (
-    url: string,
-    filename: string = "downloaded_image"
+    url: string
+    // filename: string = "downloaded_image"
   ) => {
     console.log("Image URL:", url);
   };
@@ -64,6 +84,29 @@ const ImageGalleryPage = () => {
           )}
         </>
       )}
+
+      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Deletion</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this image? This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsDeleteDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={confirmDelete}>
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

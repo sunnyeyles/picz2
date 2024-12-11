@@ -1,5 +1,4 @@
 import { ImageUpload } from "@/components/ImageUploadForm";
-import confetti from "canvas-confetti";
 
 const ImageUploadPage = () => {
   return (

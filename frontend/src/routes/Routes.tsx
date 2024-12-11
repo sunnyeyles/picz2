@@ -1,10 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "./Root";
 import { RouteObject } from "react-router-dom";
-import NotFound from "@/pages/NotFound";
-import { Suspense } from "react";
-import ImageGalleryPage from "@/pages/ImageGallery";
-import ImageUploadPage from "@/pages/ImageUpload";
+import { Suspense, lazy } from "react";
+
+const Root = lazy(() => import("./Root"));
+const NotFound = lazy(() => import("@/pages/NotFound"));
+const ImageGalleryPage = lazy(() => import("@/pages/ImageGallery"));
+const ImageUploadPage = lazy(() => import("@/pages/ImageUpload"));
 
 const routes: RouteObject[] = [
   {
@@ -17,27 +18,34 @@ const routes: RouteObject[] = [
     children: [
       {
         path: "/images",
-
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <ImageGalleryPage />
           </Suspense>
         ),
-        errorElement: <NotFound />,
+        errorElement: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <NotFound />
+          </Suspense>
+        ),
       },
       {
         path: "/upload",
-
         element: (
           <Suspense fallback={<div>Loading...</div>}>
             <ImageUploadPage />
           </Suspense>
         ),
-        errorElement: <NotFound />,
+        errorElement: (
+          <Suspense fallback={<div>Loading...</div>}>
+            <NotFound />
+          </Suspense>
+        ),
       },
     ],
   },
 ];
+
 export const router = createBrowserRouter(routes, {
   future: {
     v7_fetcherPersist: true,

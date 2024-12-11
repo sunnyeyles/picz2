@@ -66,7 +66,7 @@ const handleFiles = (
 export const handleDescriptionChange = (
   index: number,
   description: string,
-  uploadedImages: UploadedImage[],
+  // uploadedImages: UploadedImage[],
   setUploadedImages: Dispatch<SetStateAction<UploadedImage[]>>
 ) => {
   setUploadedImages((prev) =>
