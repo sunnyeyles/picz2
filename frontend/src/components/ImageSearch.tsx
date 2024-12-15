@@ -31,7 +31,7 @@ export const SearchAndSort = ({ onSearch, onSort }: SearchAndSortProps) => {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-3xl mx-auto">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 sm:flex-row">
       <div className="relative flex-grow">
         <Input
           type="text"
@@ -40,7 +40,7 @@ export const SearchAndSort = ({ onSearch, onSort }: SearchAndSortProps) => {
           onChange={(e) => handleSearch(e.target.value)}
           className="pl-10"
         />
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+        <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
       </div>
       <Select value={sortOption} onValueChange={handleSort}>
         <SelectTrigger className="w-full sm:w-[140px]">

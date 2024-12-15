@@ -51,13 +51,13 @@ export const ImageCard = ({
   return (
     <Card className="w-full max-w-sm overflow-hidden transition-all duration-300 ease-in-out hover:shadow-lg">
       <CardContent className="p-0">
-        <div className="relative group">
+        <div className="group relative">
           <img
             src={imageUrl}
             alt={title}
-            className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+            className="h-48 w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -65,7 +65,7 @@ export const ImageCard = ({
                     variant="ghost"
                     size="icon"
                     onClick={copyLink}
-                    className="text-white hover:text-blue-400 transition-colors"
+                    className="text-white transition-colors hover:text-blue-400"
                   >
                     {copied ? (
                       <Check className="h-5 w-5" />
@@ -84,7 +84,7 @@ export const ImageCard = ({
                     variant="ghost"
                     size="icon"
                     onClick={onDelete}
-                    className="text-white hover:text-red-400 transition-colors"
+                    className="text-white transition-colors hover:text-red-400"
                   >
                     <Trash2 className="h-5 w-5" />
                   </Button>
@@ -99,7 +99,7 @@ export const ImageCard = ({
                     variant="ghost"
                     size="icon"
                     onClick={onDownload}
-                    className="text-white hover:text-green-400 transition-colors"
+                    className="text-white transition-colors hover:text-green-400"
                   >
                     <a href={imageUrl} download>
                       <Download className="h-5 w-5" />
@@ -114,7 +114,7 @@ export const ImageCard = ({
           </div>
         </div>
         <div className="p-4">
-          <div className="flex justify-between items-center mb-2">
+          <div className="mb-2 flex items-center justify-between">
             <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-100">
               {title}
             </h2>
@@ -132,7 +132,7 @@ export const ImageCard = ({
             </Button>
           </div>
           {showDescription && (
-            <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
               {description}
             </p>
           )}
